@@ -12,6 +12,7 @@ function Slider(id){
   getDivSetClass(this.id, this);
   addContentDiv(this);
   addNavButtons(this);
+  addImg(this);
 
   queryData(testJSON, this);
 }
@@ -37,6 +38,13 @@ function addNavButtons(obj){
   }
 }
 
+function addImg(obj){
+  var sliderImage = document.createElement("img");
+  obj.sliderImage = sliderImage;
+  sliderImage.setAttribute("id","slider-image");
+  obj.contentDiv.appendChild(sliderImage);
+}
+
 function getDivSetClass(id, obj){
   obj.mainDiv = document.getElementById(id);
   obj.mainDiv.setAttribute("class", obj.class);
@@ -45,14 +53,17 @@ function getDivSetClass(id, obj){
 function queryData(mainDataObj, obj){
   if(mainDataObj[obj.id]){
     var sliderDataArr = mainDataObj[obj.id];
-    useData(sliderDataArr);
+    setInitialImg(obj, sliderDataArr);
   }else{
     alert("ERROR - No data found for this slider\nPlease update the slider JSON object");
   }
 }
 
-function useData(sliderDataArr){
-  console.log(sliderDataArr.length);
+function setInitialImg(obj, sliderDataArr){
+  var imageSrc;
+  obj.imagePos = 0;
+  imageSrc = sliderDataArr[obj.imagePos]["pic"];
+  obj.sliderImage.setAttribute("src", imageSrc);
 }
 
 var testSlider = new Slider("test");
