@@ -17,6 +17,11 @@ function Slider(id){
   queryData(testJSON, this);
 }
 
+function getDivSetClass(id, obj){
+  obj.mainDiv = document.getElementById(id);
+  obj.mainDiv.setAttribute("class", obj.class);
+}
+
 function addContentDiv(obj){
   var contentDiv = document.createElement("div");
   obj.contentDiv = contentDiv;
@@ -25,6 +30,9 @@ function addContentDiv(obj){
 }
 
 function addNavButtons(obj){
+  obj.controls = document.createElement("div");
+  obj.controls.setAttribute("class","controls");
+
   for(var i = 0; i < 2; i++){
     var navButton = document.createElement("div");
 
@@ -34,7 +42,8 @@ function addNavButtons(obj){
       obj.navRight = navButton.setAttribute("class","nav right");
     }
 
-    obj.mainDiv.appendChild(navButton);
+    obj.controls.appendChild(navButton);
+    obj.mainDiv.appendChild(obj.controls);
   }
 }
 
@@ -45,10 +54,7 @@ function addImg(obj){
   obj.contentDiv.appendChild(sliderImage);
 }
 
-function getDivSetClass(id, obj){
-  obj.mainDiv = document.getElementById(id);
-  obj.mainDiv.setAttribute("class", obj.class);
-}
+
 
 function queryData(mainDataObj, obj){
   if(mainDataObj[obj.id]){
