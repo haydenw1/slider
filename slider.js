@@ -10,9 +10,9 @@ function Slider(id){
   this.id = id;
 
   getDivSetClass(this.id, this);
-  addContentDiv(this);
+  addHolderDiv(this);
   addNavButtons(this);
-  addImg(this);
+  addContent(this);
 
   queryData(testJSON, this);
 }
@@ -22,36 +22,51 @@ function getDivSetClass(id, obj){
   obj.mainDiv.setAttribute("class", obj.class);
 }
 
-function addContentDiv(obj){
+function addHolderDiv(obj){
+  var holderDiv = document.createElement("div");
+  obj.holderDiv = holderDiv;
+  holderDiv.setAttribute("class","holder");
+  obj.mainDiv.appendChild(holderDiv);
+}
+
+function addNavButtons(obj){
+  for(var i = 0; i < 2; i++){
+    var navButton = document.createElement("div");
+    var arrow = document.createElement("img");
+    arrow.setAttribute("src","assets/arrow.svg");
+
+    if(i < 1){
+      obj.navLeft = navButton;
+      obj.navLeft.setAttribute("class","nav left");
+      console.log(obj.navLeft);
+      obj.navLeft.appendChild(arrow);
+    }else{
+      obj.navRight = navButton;
+      obj.navRight.setAttribute("class","nav right");
+      obj.navRight.appendChild(arrow);
+    }
+
+    obj.holderDiv.appendChild(navButton);
+  }
+}
+
+function addContent(obj){
   var contentDiv = document.createElement("div");
   obj.contentDiv = contentDiv;
   contentDiv.setAttribute("class","content");
   obj.mainDiv.appendChild(contentDiv);
-}
 
-function addNavButtons(obj){
-  obj.controls = document.createElement("div");
-  obj.controls.setAttribute("class","controls");
-
-  for(var i = 0; i < 2; i++){
-    var navButton = document.createElement("div");
-
-    if(i < 1){
-      obj.navLeft = navButton.setAttribute("class","nav left");
-    }else{
-      obj.navRight = navButton.setAttribute("class","nav right");
-    }
-
-    obj.controls.appendChild(navButton);
-    obj.mainDiv.appendChild(obj.controls);
-  }
-}
-
-function addImg(obj){
   var sliderImage = document.createElement("img");
   obj.sliderImage = sliderImage;
   sliderImage.setAttribute("id","slider-image");
-  obj.contentDiv.appendChild(sliderImage);
+
+  var sliderDesc = document.createElement("p");
+  obj.sliderDesc = sliderDesc;
+  sliderDesc.setAttribute("id","slider-desc");
+
+  contentDiv.appendChild(sliderImage);
+  contentDiv.appendChild(sliderDesc);
+  obj.holderDiv.appendChild(contentDiv);
 }
 
 
