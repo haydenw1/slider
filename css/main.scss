@@ -1,3 +1,7 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,100,300);
+
+$font-roboto: 'Roboto', Arial, sans-serif;
+
 body,
 html {
   height: 100%;
@@ -22,17 +26,53 @@ html {
   width: 600px;
 
   .content {
-    position: absolute;
+    //position: absolute;
 
-    img {
+    .slider-img {
       //height: 100%;
       background-color: red;
     }
 
-    p {
+    .slider-desc {
+      color: white;
       bottom: 0;
-      height: 20%;
+      font-family: $font-roboto;
+      font-weight: 300;
+      //height: 10%;
+      padding: 5%;
       position: absolute;
+      width: 90%;
+      //box-shadow: inset 0px -150px 120px -50px;
+      margin: 0;
+    }
+
+    .slider-desc-shadow {
+      bottom: 0;
+      box-shadow: inset 0px -150px 120px -50px;
+      height: 50%;
+      margin: 0;
+      opacity: .9;
+      position: absolute;
+      width: 100%;
+    }
+
+    .slider-title {
+      color: white;
+      top: 0;
+      font-family: $font-roboto;
+      height: 10%;
+      padding: 2% 5%;
+      position: absolute;
+      width: 90%;
+      //box-shadow: inset 0px -150px 120px -50px;
+      margin: 0;
+    }
+
+    .slider-title-shadow {
+      box-shadow: inset 0px 100px 120px -50px;
+      height: 30%;
+      position: absolute;
+      top: 0;
       width: 100%;
     }
   }
@@ -47,7 +87,7 @@ html {
 }
 
 .nav {
-  background-color: purple;
+  //background-color: purple;
   height: 100%;
   width: 20%;
 
@@ -57,11 +97,11 @@ html {
     z-index: 1;
 
     img {
-      left: calc(50% - 21px);
-      position: absolute;
-      top: calc(50% - 31px);
-      transform: rotate(180deg);
-      width: 35%;
+      left: 5%;
+    opacity: .9;
+    position: absolute;
+    top: calc(50% - 18px);
+    transform: rotate(180deg);
     }
   }
 
@@ -72,10 +112,12 @@ html {
 
     img {
       //transform: rotate(180deg);
+      opacity: .9;
       position: absolute;
-      right: calc(50% - 21px);
-      top: calc(50% - 31px);
-      width: 35%;
+      //right: calc(45% - 21px);
+      right: 5%;
+      top: calc(50% - 18px);
+      //width: 35%;
     }
   }
 }

@@ -1,8 +1,16 @@
 function Slider(id){
   var testJSON = {
     test:[
-      {"desc":"this it the first test description text.", "pic":"test1.jpg"},
-      {"desc":"this is the second test decription text.", "pic":"test2.jpg"}
+      {
+        "desc":"This it the first test description text.",
+        "pic":"test1.jpg",
+        "title":"Test Project 1"
+      },
+      {
+        "desc":"This is the second test decription text.",
+        "pic":"test2.jpg",
+        "title":"Test Project 2"
+      }
     ]
   };
 
@@ -51,21 +59,44 @@ function addNavButtons(obj){
 }
 
 function addContent(obj){
+  //make div to hold content and give class
   var contentDiv = document.createElement("div");
   obj.contentDiv = contentDiv;
   contentDiv.setAttribute("class","content");
-  obj.mainDiv.appendChild(contentDiv);
 
+  //make img to hold slider image and give id
   var sliderImage = document.createElement("img");
   obj.sliderImage = sliderImage;
-  sliderImage.setAttribute("id","slider-image");
+  sliderImage.setAttribute("class","slider-image");
 
+  //make div to hold shadow that goes behind title, and give class
+  var sliderTitleShadow= document.createElement("div");
+  obj.sliderTitleShadow = sliderTitleShadow;
+  sliderTitleShadow.setAttribute("class","slider-title-shadow");
+
+  //make div to hold shadow that goes behind description, and give class
+  var sliderDescShadow = document.createElement("div");
+  obj.sliderDescShadow = sliderDescShadow;
+  sliderDescShadow.setAttribute("class","slider-desc-shadow");
+
+  //make p to hold slider description and give class
+  var sliderTitle = document.createElement("p");
+  obj.sliderTitle = sliderTitle;
+  sliderTitle.setAttribute("class","slider-title");
+
+  //make p to hold slider description and give class
   var sliderDesc = document.createElement("p");
   obj.sliderDesc = sliderDesc;
-  sliderDesc.setAttribute("id","slider-desc");
+  sliderDesc.setAttribute("class","slider-desc");
 
+  //append the image, text shadow, and text to the content div
   contentDiv.appendChild(sliderImage);
+  contentDiv.appendChild(sliderTitleShadow);
+  contentDiv.appendChild(sliderTitle);
+  contentDiv.appendChild(sliderDescShadow);
   contentDiv.appendChild(sliderDesc);
+
+  //append the new content div to the holder div
   obj.holderDiv.appendChild(contentDiv);
 }
 
@@ -74,20 +105,32 @@ function addContent(obj){
 function queryData(mainDataObj, obj){
   if(mainDataObj[obj.id]){
     var sliderDataArr = mainDataObj[obj.id];
-    setInitialImg(obj, sliderDataArr);
+    setInitialContent(obj, sliderDataArr);
   }else{
     alert("ERROR - No data found for this slider\nPlease update the slider JSON object");
   }
 }
 
-function setInitialImg(obj, sliderDataArr){
+function setInitialContent(obj, sliderDataArr){
   var imageSrc;
-  obj.imagePos = 0;
-  imageSrc = sliderDataArr[obj.imagePos]["pic"];
+  var descSrc;
+  var titleSrc;
+
+  obj.position = 0;
+
+  imageSrc = sliderDataArr[obj.position].pic;
+  descSrc = sliderDataArr[obj.position].desc;
+  titleSrc = sliderDataArr[obj.position].title;
+
   obj.sliderImage.setAttribute("src", imageSrc);
+  obj.sliderDesc.innerHTML = descSrc;
+  obj.sliderTitle.innerHTML = titleSrc;
+
+  obj.position++;
 }
 
 var testSlider = new Slider("test");
+//var testSlider = new Slider("test2");
   //console.log(testSlider.class);
   //console.log(testSlider.id);
   //console.log(testSlider.mainDiv);

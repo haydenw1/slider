@@ -1,3 +1,4 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,100,300);
 body,
 html {
   height: 100%;
@@ -18,15 +19,40 @@ html {
   margin: 0 auto;
   position: relative;
   width: 600px; }
-  .holder .content {
-    position: absolute; }
-    .holder .content img {
-      background-color: red; }
-    .holder .content p {
-      bottom: 0;
-      height: 20%;
-      position: absolute;
-      width: 100%; }
+  .holder .content .slider-img {
+    background-color: red; }
+  .holder .content .slider-desc {
+    color: white;
+    bottom: 0;
+    font-family: "Roboto", Arial, sans-serif;
+    font-weight: 300;
+    padding: 5%;
+    position: absolute;
+    width: 90%;
+    margin: 0; }
+  .holder .content .slider-desc-shadow {
+    bottom: 0;
+    box-shadow: inset 0px -150px 120px -50px;
+    height: 50%;
+    margin: 0;
+    opacity: .9;
+    position: absolute;
+    width: 100%; }
+  .holder .content .slider-title {
+    color: white;
+    top: 0;
+    font-family: "Roboto", Arial, sans-serif;
+    height: 10%;
+    padding: 2% 5%;
+    position: absolute;
+    width: 90%;
+    margin: 0; }
+  .holder .content .slider-title-shadow {
+    box-shadow: inset 0px 100px 120px -50px;
+    height: 30%;
+    position: absolute;
+    top: 0;
+    width: 100%; }
 
 .controls {
   height: 100%;
@@ -35,7 +61,6 @@ html {
   width: 600px; }
 
 .nav {
-  background-color: purple;
   height: 100%;
   width: 20%; }
   .nav.left {
@@ -43,19 +68,19 @@ html {
     left: 0;
     z-index: 1; }
     .nav.left img {
-      left: calc(50% - 21px);
+      left: 5%;
+      opacity: .9;
       position: absolute;
-      top: calc(50% - 31px);
-      transform: rotate(180deg);
-      width: 35%; }
+      top: calc(50% - 18px);
+      transform: rotate(180deg); }
   .nav.right {
     position: absolute;
     right: 0;
     z-index: 1; }
     .nav.right img {
+      opacity: .9;
       position: absolute;
-      right: calc(50% - 21px);
-      top: calc(50% - 31px);
-      width: 35%; }
+      right: 5%;
+      top: calc(50% - 18px); }
 
 /*# sourceMappingURL=main.css.map */
