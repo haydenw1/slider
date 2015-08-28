@@ -54,6 +54,34 @@ function addNavButtons(obj){
       obj.navRight.appendChild(arrow);
     }
 
+    navButton.addEventListener("mouseover", function(event) {
+      var go = event.target.childNodes[0] ? true : false;
+
+      if(go){
+        event.target.childNodes[0].style.width = "30%";
+        event.target.childNodes[0].style.top = "calc(50% - 26.5px)";
+        event.target.childNodes[0].style.opacity = ".85";
+      }
+    });
+
+    navButton.addEventListener("mouseleave", function(event) {
+      var go = event.target.childNodes[0] ? true : false;
+
+      if(go && event.target.childNodes[0]) {
+        event.target.childNodes[0].style.width = "20%";
+        event.target.childNodes[0].style.top = "calc(50% - 18px)";
+        event.target.childNodes[0].style.opacity = ".5";
+      }
+    });
+
+    navButton.addEventListener("click", function(event) {
+      if(event.target.className == "nav left") {
+        cycle("left");
+      }else{
+        cycle("right");
+      }
+    });
+
     obj.holderDiv.appendChild(navButton);
   }
 }
@@ -128,6 +156,13 @@ function setInitialContent(obj, sliderDataArr){
 
   obj.position++;
 }
+
+
+
+function cycle(dir){
+  console.log(dir);
+}
+
 
 var testSlider = new Slider("test");
 //var testSlider = new Slider("test2");

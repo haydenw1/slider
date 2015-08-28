@@ -51,7 +51,7 @@ html {
       box-shadow: inset 0px -150px 120px -50px;
       height: 50%;
       margin: 0;
-      opacity: .9;
+      opacity: .75;
       position: absolute;
       width: 100%;
     }
@@ -69,8 +69,9 @@ html {
     }
 
     .slider-title-shadow {
-      box-shadow: inset 0px 100px 120px -50px;
+      box-shadow: inset 0px 100px 100px -60px;
       height: 30%;
+      opacity: .75;
       position: absolute;
       top: 0;
       width: 100%;
@@ -91,17 +92,22 @@ html {
   height: 100%;
   width: 20%;
 
+  img {
+    opacity: .5;
+    position: absolute;
+    top: calc(50% - 18px);
+    transition: left .15s, top .15s, width .15s;
+    width: 20%;
+  }
+
   &.left {
     position: absolute;
     left: 0;
     z-index: 1;
 
     img {
-      left: 5%;
-    opacity: .9;
-    position: absolute;
-    top: calc(50% - 18px);
-    transform: rotate(180deg);
+      left: 10%;
+      transform: rotate(180deg);
     }
   }
 
@@ -111,13 +117,7 @@ html {
     z-index: 1;
 
     img {
-      //transform: rotate(180deg);
-      opacity: .9;
-      position: absolute;
-      //right: calc(45% - 21px);
-      right: 5%;
-      top: calc(50% - 18px);
-      //width: 35%;
+      right: 10%;
     }
   }
 }
