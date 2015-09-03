@@ -28,9 +28,9 @@ html {
   .content {
     //position: absolute;
 
-    .slider-img {
+    .slider-image {
       //height: 100%;
-      background-color: red;
+      width: 100%;
     }
 
     .slider-desc {
@@ -48,7 +48,7 @@ html {
 
     .slider-desc-shadow {
       bottom: 0;
-      box-shadow: inset 0px -150px 120px -50px;
+      box-shadow: inset 0px -100px 70px -50px;
       height: 50%;
       margin: 0;
       opacity: .75;

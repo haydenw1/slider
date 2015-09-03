@@ -19,8 +19,8 @@ html {
   margin: 0 auto;
   position: relative;
   width: 600px; }
-  .holder .content .slider-img {
-    background-color: red; }
+  .holder .content .slider-image {
+    width: 100%; }
   .holder .content .slider-desc {
     color: white;
     bottom: 0;
@@ -32,7 +32,7 @@ html {
     margin: 0; }
   .holder .content .slider-desc-shadow {
     bottom: 0;
-    box-shadow: inset 0px -150px 120px -50px;
+    box-shadow: inset 0px -100px 70px -50px;
     height: 50%;
     margin: 0;
     opacity: .75;

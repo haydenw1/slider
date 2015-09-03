@@ -1,18 +1,30 @@
 function Slider(id){
-  var testJSON = {
+
+  this.testJSON = {
     test:[
       {
         "desc":"This it the first test description text.",
-        "pic":"test1.jpg",
+        "image":"test1.jpg",
         "title":"Test Project 1"
       },
       {
         "desc":"This is the second test decription text.",
-        "pic":"test2.jpg",
+        "image":"test2.jpg",
         "title":"Test Project 2"
+      },
+      {
+        "desc":"This is the third test decription text.",
+        "image":"test3.jpg",
+        "title":"Test Project 3"
       }
     ]
   };
+
+  this.current = [
+    {
+
+    }
+  ];
 
   this.class = "slider";
   this.id = id;
@@ -22,7 +34,8 @@ function Slider(id){
   addNavButtons(this);
   addContent(this);
 
-  queryData(testJSON, this);
+  console.log(this.testJSON.test);
+  queryData(this.testJSON, this);
 }
 
 function getDivSetClass(id, obj){
@@ -75,10 +88,12 @@ function addNavButtons(obj){
     });
 
     navButton.addEventListener("click", function(event) {
-      if(event.target.className == "nav left") {
-        cycle("left");
+      if(event.target.className == "nav left" || event.target.parentElement.className == "nav left") {
+        console.log(event.target.className);
+        cycle(obj, "left");
       }else{
-        cycle("right");
+        console.log(event.target.className);
+        cycle(obj, "right");
       }
     });
 
@@ -118,7 +133,8 @@ function addContent(obj){
   sliderDesc.setAttribute("class","slider-desc");
 
   //append the image, text shadow, and text to the content div
-  contentDiv.appendChild(sliderImage);
+
+  //contentDiv.appendChild(sliderImage);
   contentDiv.appendChild(sliderTitleShadow);
   contentDiv.appendChild(sliderTitle);
   contentDiv.appendChild(sliderDescShadow);
@@ -146,21 +162,109 @@ function setInitialContent(obj, sliderDataArr){
 
   obj.position = 0;
 
-  imageSrc = sliderDataArr[obj.position].pic;
+  imageSrc = sliderDataArr[obj.position].image;
   descSrc = sliderDataArr[obj.position].desc;
   titleSrc = sliderDataArr[obj.position].title;
 
-  obj.sliderImage.setAttribute("src", imageSrc);
+  //obj.sliderImage.setAttribute("src", imageSrc);
   obj.sliderDesc.innerHTML = descSrc;
   obj.sliderTitle.innerHTML = titleSrc;
 
-  obj.position++;
+  obj.current[0].desc = descSrc;
+  obj.current[0].image = imageSrc;
+  obj.current[0].title = titleSrc;
+
+
+
+  //var current = obj.current;
+
+  console.log(obj.current);
+  console.log(obj.testJSON.test);
+
+  d3.select(".content").selectAll(".slider-image")
+    .data(obj.current, function(d) {console.log(d.title);return d.title; })
+    .enter()
+    .append("img")
+    .attr("class","slider-image")
+    .attr("src",function(d){return d.image;});
 }
 
 
 
-function cycle(dir){
+function cycle(obj, dir){
+  /*console.log(dir);
+  obj.current.image = "test2.jpg";
+
+  console.log(obj.current.image);
+  var content = d3.select(".content");
+
+  console.log(content);
+
+  var image = content.selectAll(".slider-image")
+    .data(obj.current);
+
+  image.exit().remove();
+
+  image.enter().append("img")
+    .attr("class","pleaseworknow");*/
+
+  if( dir === "left" ) {
+    if( obj.position === 0 ) {
+      obj.position = obj.testJSON.test.length - 1;
+    }else {
+      obj.position--;
+    }
+  }else {
+    if( obj.position === obj.testJSON.test.length - 1 ) {
+      obj.position = 0;
+    }else {
+      obj.position++;
+    }
+  }
+
+  obj.current[1]={};
+  obj.current[1].image = obj.testJSON.test[obj.position].image;
+  obj.current[1].desc = obj.testJSON.test[obj.position].desc;
+  obj.current[1].title = obj.testJSON.test[obj.position].title;
+
+  console.log(obj.current);
+
+
+  var image = d3.select(".content").selectAll(".slider-image")
+    .data(obj.current, function(d) {console.log(d.title);return d.title; });
+
+  //image.exit().remove();
+
+
   console.log(dir);
+
+  //update image that was already in slider
+  image
+    .style("position","absolute")
+    .style("left","0px")
+    .transition()
+      .style("left",function(){
+          if(dir === "left"){
+            return "-600px";
+          }else{
+            return "600px";
+          }
+        })
+      .style("opacity","0")
+      .remove();
+
+  //add image that is next
+  image.enter()
+    .append("img")
+    .attr("class","slider-image")
+    .attr("src",function(d){return d.image;});
+
+  obj.sliderDesc.innerHTML = obj.current[1].desc;
+  obj.sliderTitle.innerHTML = obj.current[1].title;
+
+  obj.current.shift();
+
+
 }
 
 
