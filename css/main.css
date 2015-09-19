@@ -18,42 +18,45 @@ html {
   height: 100%;
   margin: 0 auto;
   position: relative;
-  width: 600px; }
-  .holder .content .slider-image {
-    width: 100%; }
-  .holder .content .slider-desc {
-    color: white;
-    bottom: 0;
-    font-family: "Roboto", Arial, sans-serif;
-    font-weight: 300;
-    padding: 5%;
-    position: absolute;
-    width: 90%;
-    margin: 0; }
-  .holder .content .slider-desc-shadow {
-    bottom: 0;
-    box-shadow: inset 0px -100px 70px -50px;
-    height: 50%;
-    margin: 0;
-    opacity: .75;
-    position: absolute;
-    width: 100%; }
-  .holder .content .slider-title {
-    color: white;
-    top: 0;
-    font-family: "Roboto", Arial, sans-serif;
-    height: 10%;
-    padding: 2% 5%;
-    position: absolute;
-    width: 90%;
-    margin: 0; }
-  .holder .content .slider-title-shadow {
-    box-shadow: inset 0px 100px 100px -60px;
-    height: 30%;
-    opacity: .75;
-    position: absolute;
-    top: 0;
-    width: 100%; }
+  width: 600px;
+  overflow: hidden; }
+  .holder .content {
+    overflow: hidden; }
+    .holder .content .slider-image {
+      width: 100%; }
+    .holder .content .slider-desc {
+      color: white;
+      bottom: 0;
+      font-family: "Roboto", Arial, sans-serif;
+      font-weight: 300;
+      padding: 5% 16%;
+      position: absolute;
+      width: 68%;
+      margin: 0; }
+    .holder .content .slider-desc-shadow {
+      bottom: 0;
+      box-shadow: inset 0px -125px 70px -50px;
+      height: 50%;
+      margin: 0;
+      opacity: .75;
+      position: absolute;
+      width: 100%; }
+    .holder .content .slider-title {
+      color: white;
+      top: 0;
+      font-family: "Roboto", Arial, sans-serif;
+      height: 10%;
+      padding: 2% 16%;
+      position: absolute;
+      width: 68%;
+      margin: 0; }
+    .holder .content .slider-title-shadow {
+      box-shadow: inset 0px 100px 100px -60px;
+      height: 30%;
+      opacity: .75;
+      position: absolute;
+      top: 0;
+      width: 100%; }
 
 .controls {
   height: 100%;
@@ -63,25 +66,39 @@ html {
 
 .nav {
   height: 100%;
-  width: 20%; }
+  width: 15%;
+  cursor: pointer; }
+  .nav:hover {
+    background-color: rgba(0, 255, 173, 0.55); }
+  .nav:active {
+    background-color: rgba(0, 255, 173, 0.85); }
   .nav img {
-    opacity: .5;
+    opacity: .75;
     position: absolute;
     top: calc(50% - 18px);
     transition: left .15s, top .15s, width .15s;
-    width: 20%; }
+    width: 26.66%; }
   .nav.left {
     position: absolute;
     left: 0;
     z-index: 1; }
     .nav.left img {
-      left: 10%;
+      left: 25%;
       transform: rotate(180deg); }
   .nav.right {
     position: absolute;
     right: 0;
     z-index: 1; }
     .nav.right img {
-      right: 10%; }
+      right: 25%; }
+
+.no-select {
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  -webkit-touch-callout: none;
+  -webkit-user-select: none; }
 
 /*# sourceMappingURL=main.css.map */

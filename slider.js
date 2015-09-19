@@ -58,12 +58,12 @@ function addNavButtons(obj){
 
     if(i < 1){
       obj.navLeft = navButton;
-      obj.navLeft.setAttribute("class","nav left");
+      obj.navLeft.setAttribute("class","nav left no-select");
       console.log(obj.navLeft);
       obj.navLeft.appendChild(arrow);
     }else{
       obj.navRight = navButton;
-      obj.navRight.setAttribute("class","nav right");
+      obj.navRight.setAttribute("class","nav right no-select");
       obj.navRight.appendChild(arrow);
     }
 
@@ -71,7 +71,7 @@ function addNavButtons(obj){
       var go = event.target.childNodes[0] ? true : false;
 
       if(go){
-        event.target.childNodes[0].style.width = "30%";
+        event.target.childNodes[0].style.width = "40%";
         event.target.childNodes[0].style.top = "calc(50% - 26.5px)";
         event.target.childNodes[0].style.opacity = ".85";
       }
@@ -81,14 +81,15 @@ function addNavButtons(obj){
       var go = event.target.childNodes[0] ? true : false;
 
       if(go && event.target.childNodes[0]) {
-        event.target.childNodes[0].style.width = "20%";
+        event.target.childNodes[0].style.width = "26.66%";
         event.target.childNodes[0].style.top = "calc(50% - 18px)";
         event.target.childNodes[0].style.opacity = ".5";
       }
     });
 
     navButton.addEventListener("click", function(event) {
-      if(event.target.className == "nav left" || event.target.parentElement.className == "nav left") {
+      console.log(event.target.className.slice(0,7));
+      if(event.target.className.slice(0,8) === "nav left" || event.target.parentElement.className.slice(0,8) === "nav left") {
         console.log(event.target.className);
         cycle(obj, "left");
       }else{
@@ -208,6 +209,11 @@ function cycle(obj, dir){
   image.enter().append("img")
     .attr("class","pleaseworknow");*/
 
+  //console.log(obj.position);
+
+  var check = d3.select(".content").selectAll(".slider-image");
+  check.remove();
+
   if( dir === "left" ) {
     if( obj.position === 0 ) {
       obj.position = obj.testJSON.test.length - 1;
@@ -227,31 +233,8 @@ function cycle(obj, dir){
   obj.current[1].desc = obj.testJSON.test[obj.position].desc;
   obj.current[1].title = obj.testJSON.test[obj.position].title;
 
-  console.log(obj.current);
-
-
   var image = d3.select(".content").selectAll(".slider-image")
     .data(obj.current, function(d) {console.log(d.title);return d.title; });
-
-  //image.exit().remove();
-
-
-  console.log(dir);
-
-  //update image that was already in slider
-  image
-    .style("position","absolute")
-    .style("left","0px")
-    .transition()
-      .style("left",function(){
-          if(dir === "left"){
-            return "-600px";
-          }else{
-            return "600px";
-          }
-        })
-      .style("opacity","0")
-      .remove();
 
   //add image that is next
   image.enter()
@@ -264,7 +247,20 @@ function cycle(obj, dir){
 
   obj.current.shift();
 
-
+  //update image that was already in slider
+  d3.select(".content").select(".slider-image")
+    .style("position","absolute")
+    .style("left","0px")
+    .transition().duration(500)
+      .style("left",function(){
+          if(dir === "left"){
+            return "-600px";
+          }else{
+            return "600px";
+          }
+        })
+      .style("opacity","0")
+      .remove();
 }
 
 
