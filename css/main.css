@@ -1,0 +1,91 @@
+.slider {
+  height: 60vw;
+  position: relative;
+  width: 100%; }
+
+.s-holder {
+  height: 100%;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden; }
+  .s-holder .content {
+    overflow: hidden; }
+    .s-holder .content .slider-image {
+      width: 100%; }
+    .s-holder .content .slider-desc {
+      color: #fff;
+      bottom: 0;
+      font-family: "Roboto";
+      padding: 6% 10%;
+      position: absolute;
+      width: 80%;
+      margin: 0; }
+    .s-holder .content .slider-desc-shadow {
+      bottom: 0;
+      box-shadow: inset 0px -140px 70px -50px;
+      height: 50%;
+      margin: 0;
+      opacity: .75;
+      position: absolute;
+      width: 100%; }
+    .s-holder .content .slider-title {
+      color: #fff;
+      top: 0;
+      font-family: "Roboto";
+      height: 10%;
+      padding: 2% 10%;
+      position: absolute;
+      width: 80%;
+      margin: 0; }
+    .s-holder .content .slider-title-shadow {
+      box-shadow: inset 0px 100px 70px -60px;
+      height: 30%;
+      opacity: .75;
+      position: absolute;
+      top: 0;
+      width: 100%; }
+
+.s-nav {
+  height: 100%;
+  width: 8%;
+  cursor: pointer; }
+  .s-nav:hover {
+    background-color: rgba(4, 216, 238, 0.75); }
+  .s-nav:active {
+    background-color: rgba(4, 216, 238, 0.85); }
+  .s-nav img {
+    opacity: .75;
+    position: absolute;
+    top: calc(50% - 14.5px);
+    transition: left .15s, top .15s, width .15s;
+    width: 20px; }
+  .s-nav.right, .s-nav.left {
+    position: absolute;
+    right: 0;
+    z-index: 1; }
+    .s-nav.right img, .s-nav.left img {
+      right: 25%; }
+  .s-nav.left {
+    left: 0; }
+    .s-nav.left img {
+      left: 25%;
+      transform: rotate(180deg); }
+
+svg {
+  pointer-events: none;
+  position: absolute;
+  width: 100%;
+  height: 10%;
+  bottom: 0;
+  left: 0; }
+
+.no-select {
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  -webkit-touch-callout: none;
+  -webkit-user-select: none; }
+
+/*# sourceMappingURL=main.css.map */
