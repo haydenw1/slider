@@ -7,7 +7,7 @@
 
 
 function Slider(id){
-  var obj = this;  //save reference to 'this' to use in jquery ready function
+  var obj = this;  //save reference to 'this' to pass to functions called in jquery
 
   this.current = [
     {
@@ -35,15 +35,16 @@ function Slider(id){
 
 /**
  * Function that gets and stores the element where the slider will go, and gives
- * it the class stored in obj.class
+ * it the class stored in obj.class. Sets height of main div to ratio of width.
  * @param {string} id  The id of the element where the slider will go
  * @param {object} obj The current slider object being constructed
  */
 function getDivSetClass(id, obj) {
   obj.mainDiv = document.getElementById(id);
-  console.log(id);
-  console.log(obj.mainDiv);
   obj.mainDiv.setAttribute("class", obj.class);
+
+  var ratio = obj.heightRatio = 0.66;
+  //obj.mainDiv.style.height = obj.mainDiv.clientWidth * ratio + "px";
 }
 
 /**
@@ -65,6 +66,86 @@ function addHolderDiv(obj) {
  * @param {object} obj The current slider object being constructed
  */
 function addNavButtons(obj) {
+  //Listener to change style of moused over nav area - var go is for determining
+  //if the mouseover is in a child element of the nav (the arrow)
+  obj.mOver = function(e) {
+    console.log("mah-siry");
+
+    var go = e.target.childNodes[0] ? true : false;
+
+    if (go) {
+      e.target.childNodes[0].style.width = "25px";
+      e.target.childNodes[0].style.top = "calc(50% - 18.5px)";
+      //e.target.childNodes[0].style.opacity = ".85";
+
+      /*
+      //if nav button moused-over is left, shrink title and description left padding
+      //and add margin to fit nav (purely visual)
+      if (event.target.className.slice(0,10) === "s-nav left" || event.target.parentElement.className.slice(0,10) === "s-nav left") {
+        if (obj.sliderTitle && obj.sliderDesc) {
+          obj.sliderTitle.style.paddingLeft = "2%";
+          obj.sliderTitle.style.marginLeft = "8%";
+          obj.sliderDesc.style.paddingLeft = "2%";
+          obj.sliderDesc.style.marginLeft = "8%";
+        }
+      } else {  //else if nav button moused-over is right, shrink title and description right padding and add margin
+        if (obj.sliderTitle && obj.sliderDesc) {
+          obj.sliderTitle.style.paddingRight = "2%";
+          obj.sliderTitle.style.marginRight = "8%";
+          obj.sliderDesc.style.paddingRight = "2%";
+          obj.sliderDesc.style.marginRight = "8%";
+        }
+      }
+      */
+    }
+  };
+
+  //Listener to change style back to normal nav - var go is for determining
+  //if the mouseover is in a child element of the nav (the arrow)
+  obj.mLeave = function(e) {
+    console.log("m'leavy");
+
+    var go = e.target.childNodes[0] ? true : false;
+
+    if (go && e.target.childNodes[0]) {
+      e.target.childNodes[0].style.width = "20px";
+      e.target.childNodes[0].style.top = "calc(50% - 14.5px)";
+      //e.target.childNodes[0].style.opacity = ".5";
+
+      /*
+      //if nav mouse leaves is left (direction) return title and description left style to normal
+      if (event.target.className.slice(0,10) === "s-nav left" || event.target.parentElement.className.slice(0,10) === "s-nav left") {
+        if (obj.sliderTitle && obj.sliderDesc) {
+          obj.sliderTitle.style.paddingLeft = "10%";
+          obj.sliderTitle.style.marginLeft = "0%";
+          obj.sliderDesc.style.paddingLeft = "10%";
+          obj.sliderDesc.style.marginLeft = "0%";
+        }
+      } else {  //if nav mouse leaves is right (direction) return title and description right style to normal
+        if (obj.sliderTitle && obj.sliderDesc) {
+          obj.sliderTitle.style.paddingRight = "10%";
+          obj.sliderTitle.style.marginRight = "0%";
+          obj.sliderDesc.style.paddingRight = "10%";
+          obj.sliderDesc.style.marginRight = "0%";
+        }
+      }
+      */
+    }
+  };
+
+  //Listen for a click on the nav buttons, calls [cycle] and passes a direction
+  //determined by the class of the nav button that was clicked, and calls [updateDots]
+  obj.mClick = function(e) {
+    console.log("mah-clicky");
+
+    if (e.target.className.slice(0,10) === "s-nav left" || e.target.parentElement.className.slice(0,10) === "s-nav left") {
+      cycle("left", obj);
+    } else {
+      cycle("right", obj);
+    }
+    updateDots(obj);
+  };
+
   for (var i = 0; i < 2; i++) {
     var navButton = document.createElement("div");
     var arrow = document.createElement("img");
@@ -73,51 +154,23 @@ function addNavButtons(obj) {
 
     if (i < 1) {
       obj.navLeft = navButton;
-      obj.navLeft.setAttribute("class","s-nav left no-select");
+      obj.navLeft.setAttribute("class","s-nav left no-select dz");
       obj.navLeft.appendChild(arrow);
     } else {
       obj.navRight = navButton;
-      obj.navRight.setAttribute("class","s-nav right no-select");
+      obj.navRight.setAttribute("class","s-nav right no-select dz");
       obj.navRight.appendChild(arrow);
     }
 
-    //Listener to change style of moused over nav area - var go is for determining
-    //if the mouseover is in a child element of the nav (the arrow)
-    navButton.addEventListener("mouseover", function(event) {
-      var go = event.target.childNodes[0] ? true : false;
 
-      if (go) {
-        event.target.childNodes[0].style.width = "25px";
-        event.target.childNodes[0].style.top = "calc(50% - 18.5px)";
-        event.target.childNodes[0].style.opacity = ".85";
-      }
-    });
-
-    //Listener to change style back to normal nav - var go is for determining
-    //if the mouseover is in a child element of the nav (the arrow)
-    navButton.addEventListener("mouseleave", function(event) {
-      var go = event.target.childNodes[0] ? true : false;
-
-      if (go && event.target.childNodes[0]) {
-        event.target.childNodes[0].style.width = "20px";
-        event.target.childNodes[0].style.top = "calc(50% - 14.5px)";
-        event.target.childNodes[0].style.opacity = ".5";
-      }
-    });
-
-    //Listen for a click on the nav buttons, calls [cycle] and passes a direction
-    //determined by the class of the nav button that was clicked, and calls [updateDots]
-    navButton.addEventListener("click", function(event) {
-      if (event.target.className.slice(0,10) === "s-nav left" || event.target.parentElement.className.slice(0,10) === "s-nav left") {
-        cycle("left", obj);
-      } else {
-        cycle("right", obj);
-      }
-      updateDots(obj);
-    });
+    navButton.addEventListener("mouseover", obj.mOver);
+    navButton.addEventListener("mouseleave", obj.mLeave);
+    navButton.addEventListener("click", obj.mClick);
 
     obj.holderDiv.appendChild(navButton);
   }
+
+
 }
 
 /**
@@ -128,23 +181,23 @@ function addNavButtons(obj) {
 function addElements(obj) {
   var contentDiv = obj.contentDiv = document.createElement("div");
   var sliderImage = obj.sliderImage = document.createElement("img");
-  var sliderTitleShadow = obj.sliderTitleShadow = document.createElement("div");
-  var sliderDescShadow = obj.sliderDescShadow = document.createElement("div");
+  //var sliderTitleShadow = obj.sliderTitleShadow = document.createElement("div");
+  //var sliderDescShadow = obj.sliderDescShadow = document.createElement("div");
   var sliderTitle = obj.sliderTitle = document.createElement("p");
   var sliderDesc = obj.sliderDesc = document.createElement("p");
 
   contentDiv.setAttribute("class","content " + obj.id);  //adding the object id allows differentation between multiple sliders
   sliderImage.setAttribute("class","slider-image");
-  sliderTitleShadow.setAttribute("class","slider-title-shadow");
-  sliderDescShadow.setAttribute("class","slider-desc-shadow");
+  //sliderTitleShadow.setAttribute("class","slider-title-shadow");
+  //sliderDescShadow.setAttribute("class","slider-desc-shadow");
   sliderTitle.setAttribute("class","slider-title");
   sliderDesc.setAttribute("class","slider-desc");
 
   //append the image, text shadow, and text to the content div
-  contentDiv.appendChild(sliderTitleShadow);
+  //contentDiv.appendChild(sliderTitleShadow);
   contentDiv.appendChild(sliderTitle);
-  contentDiv.appendChild(sliderDescShadow);
-  contentDiv.appendChild(sliderDesc);
+  //contentDiv.appendChild(sliderImage);
+  //contentDiv.appendChild(sliderDesc);
 
   obj.holderDiv.appendChild(contentDiv);  //append the new content div to the holder div
 }
@@ -326,9 +379,9 @@ function makeDots(obj) {
       //gives circle that matches 'obj.position' a different opacity
       .style("opacity",function(d,i) {
         if (i == obj.position) {
-          return 0.75;
+          return 1;
         } else {
-          return 0.5;
+          return 0.9;
         }
       })
       .attr("class","dot");
@@ -363,9 +416,9 @@ function updateDots(obj) {
       //gives circle that matches 'obj.position' a different opacity
       .style("opacity",function(d,i) {
         if (i == obj.position) {
-          return 0.75;
+          return 1;
         } else {
-          return 0.5;
+          return 0.9;
         }
       });
 }
@@ -380,6 +433,8 @@ function addListeners(obj) {
     var sliderWidth = obj.mainDiv.clientWidth;
     var cY = sliderWidth * 0.6 * 0.10 * 0.5;  //recalculate center y placement after resize
 
+    //obj.mainDiv.style.height = obj.mainDiv.clientWidth * obj.heightRatio + "px";  //adjust height of slider
+
     obj.g.selectAll("circle")
       .attr("cy", cY)
       .attr("cx", function(d,i) {
@@ -387,5 +442,39 @@ function addListeners(obj) {
         return start + (obj.cX * i);
       });
 
-  }, true);
+  });
+
+  window.addEventListener('touchstart', function() {
+    $(".s-nav").removeClass("dz");
+
+    var navs = document.getElementsByClassName("s-nav");
+
+    for(x=0;x<navs.length;x++){
+      navs[x].removeEventListener('mouseover', obj.mOver);
+      navs[x].removeEventListener('mouseleave', obj.mLeave);
+      //navs[x].removeEventListener('click', obj.mClick);
+    }
+
+
+    d3.selectAll(".s-nav")
+      .style("width","20%")
+      .on("touch", function(){
+        obj.mClick(event);
+      })
+        .selectAll("img")
+          .style("width","35px")
+          .style("top","calc(50% - 23.5px)")
+          //.style("opacity",".95");
+
+    d3.selectAll(".slider-title")
+      .style("text-align","center");
+
+    d3.selectAll(".slider-desc")
+      .style("text-align","center");
+
+
+
+
+    this.removeEventListener('touchstart', arguments.callee);
+  });
 }
